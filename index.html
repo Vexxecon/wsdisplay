@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <title>Websocket Practice</title>
+</head>
+<body>
+<div id="imageContainer" style="float:right; width: 75%;">
+    <img id="image" style=" width: 75%;" src="" /><br />
+    <button onClick="keep()">Keep</button> <!-- new buttons should be tied to new methods in this way: -->
+    <button onClick="reject()">Reject</button> <!-- onClick should be targeting the function you want to -->
+    <button onClick="retry()">Retry</button> <!-- send to the server, duplicate functions below -->
+</div>
+  <pre id="messages"></pre>
+  <script>
+
+  let imageId = ''
+  const getElement = (id) => document.getElementById(id);
+  const ws = new WebSocket('ws://localhost:3030'); //point at your own websocket server
+
+  ws.onopen = () => { 
+    console.log('Now connected'); 
+  };
+
+  ws.onmessage = (event) => {
+    const messages = JSON.parse(event.data);
+    getElement('messages').innerHTML = syntaxHighlight(JSON.stringify(messages.jsonData, undefined, 4))
+    imageId = messages.imageId
+    getElement('image').src ="data:image/jpg;base64," + messages.image;
+  };
+
+  // BUTTON FUNCTIONS
+  // To duplicate:
+  // coppy whole consant, change name and json data as you see fit
+  const keep = () => {
+      let jsonData = {imageId: imageId, button: 0} // Change this to whatever data you're looking to send back
+      let jsonBlob = new Blob([JSON.stringify(jsonData, null, 4)], {type : 'application/json'});
+    ws.send(jsonBlob);
+  };
+
+  const reject = () => {
+      let jsonData = {imageId: imageId, button: 1} // Change this to whatever data you're looking to send back
+      let jsonBlob = new Blob([JSON.stringify(jsonData, null, 4)], {type : 'application/json'});
+    ws.send(jsonBlob);
+  };
+
+  const retry = () => {
+      let jsonData = {imageId: imageId, button: 2} // Change this to whatever data you're looking to send back
+      let jsonBlob = new Blob([JSON.stringify(jsonData, null, 4)], {type : 'application/json'});
+    ws.send(jsonBlob);
+  };
+
+  function output(inp) {
+    document.body.appendChild(document.createElement('pre')).innerHTML = inp;
+    }
+
+    function syntaxHighlight(json) {
+        json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+            var cls = 'number';
+            if (/^"/.test(match)) {
+                if (/:$/.test(match)) {
+                    cls = 'key';
+                } else {
+                    cls = 'string';
+                }
+            } else if (/true|false/.test(match)) {
+                cls = 'boolean';
+            } else if (/null/.test(match)) {
+                cls = 'null';
+            }
+            return '<span class="' + cls + '">' + match + '</span>';
+        });
+    }
+  </script>
+</body>
+</body>
+</html>
