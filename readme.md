@@ -6,7 +6,7 @@ upon button press, it is sending the following json data in string format: { ima
 
 ## Setup
 
-on line 17, change the websocket server to your desired server
+on line 17, change the websocket server to your desired server, default is `ws://localhost:3030`, change to whatever server:port you prefer.
 
 ## Expansion
 
