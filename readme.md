@@ -1,4 +1,10 @@
-# Setup
+# Intro
+
+This is receiving the following json from the server: { image: [image data converted to base64 binary to text encoding], imageId: [whatever identifier you'll need to recognize what image you're sending button presses for], jsonData: [whatever data you need displayed in the JSON display on the left side] }
+
+upon button press, it is sending the following json data in string format: { imageId: [the identifier you sent from the server to verify what you're getting back matches which image], button: [hardcoded value you're sending back, I just picked 0, 1, 2 as defaults] }
+
+## Setup
 
 on line 17, change the websocket server to your desired server
 
