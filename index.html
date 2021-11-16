@@ -31,21 +31,18 @@
   // To duplicate:
   // coppy whole consant, change name and json data as you see fit
   const keep = () => {
-      let jsonData = {imageId: imageId, button: 0} // Change this to whatever data you're looking to send back
-      let jsonBlob = new Blob([JSON.stringify(jsonData, null, 4)], {type : 'application/json'});
-    ws.send(jsonBlob);
+    let jsonData = {imageId: imageId, button: 0} // Change this to whatever data you're looking to send back
+    ws.send(JSON.stringify(jsonData));
   };
 
   const reject = () => {
-      let jsonData = {imageId: imageId, button: 1} // Change this to whatever data you're looking to send back
-      let jsonBlob = new Blob([JSON.stringify(jsonData, null, 4)], {type : 'application/json'});
-    ws.send(jsonBlob);
+    let jsonData = {imageId: imageId, button: 1} // Change this to whatever data you're looking to send back
+    ws.send(JSON.stringify(jsonData));
   };
 
   const retry = () => {
-      let jsonData = {imageId: imageId, button: 2} // Change this to whatever data you're looking to send back
-      let jsonBlob = new Blob([JSON.stringify(jsonData, null, 4)], {type : 'application/json'});
-    ws.send(jsonBlob);
+    let jsonData = {imageId: imageId, button: 2} // Change this to whatever data you're looking to send back
+    ws.send(JSON.stringify(jsonData));
   };
 
   function output(inp) {
